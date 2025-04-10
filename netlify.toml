@@ -1,12 +1,8 @@
 [build]
   command = "echo 'No build needed'"
   functions = "netlify/functions"
-  publish = "assets"  # This ensures assets are included
-
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
-  [plugins.inputs]
-    include = ["assets/*"]  # Explicitly include assets
+  publish = "assets"
 
 [functions]
   node_bundler = "esbuild"
+  included_files = ["assets/*"]  # Key change - replaces the plugin
