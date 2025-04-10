@@ -11,6 +11,15 @@ This project creates **personalized images** for email campaigns by dynamically 
 3. **Integration**:  
    Use the URL in **Outlook Mail Merge** or **Gmail/GMail extensions** to embed personalized images in emails.  
 
+## Dyanmic URL Structure
+```
+https://your-site.netlify.app/.netlify/functions/generate-image?
+  first=[First_Name]&
+  last=[Last_Name]&
+  recognition=[Award_Text]&
+  photo=[Profile_Picture_URL]
+```
+
 ## Setup  
 1. Deploy the Netlify function (included in `/netlify/functions/`).  
 2. Store your background template in `/assets/`.  
