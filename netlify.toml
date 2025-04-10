@@ -1,4 +1,7 @@
 [build]
-  command = "echo 'No build needed'"
+  command = "npm install && npm run build"
   functions = "netlify/functions"
   publish = "assets"
+
+[functions]
+  node_bundler = "esbuild"
