@@ -1,4 +1,10 @@
 [build]
-  command = "echo 'No build required'"
   functions = "netlify/functions"
-  publish = "assets"
+  command = "echo 'No build needed'"
+
+[functions]
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "16"
+  AWS_LAMBDA_JS_RUNTIME = "nodejs16.x"
