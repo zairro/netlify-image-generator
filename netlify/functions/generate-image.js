@@ -8,16 +8,17 @@ exports.handler = async (event) => {
   const ctx = canvas.getContext('2d');
 
   try {
-    // ===== 1. CORRECTED PATH RESOLUTION =====
+    // ===== 1. BULLETPROOF PATH RESOLUTION =====
     const bgPath = path.join(
-      process.env.NETLIFY_DEV ? __dirname : process.cwd(),
-      '../../assets/award.png'  // Adjusted path for your structure
+      process.env.NETLIFY_DEV ? __dirname : '/var/task',
+      '../../assets/award.png'
     );
     
     console.log('Loading background from:', bgPath);
-    
-    if (!fs.existsSync(bgPath)) {
-      throw new Error(`Background image not found at: ${bgPath}\nCurrent directory: ${__dirname}`);
+
+    // Local file existence check (dev only)
+    if (process.env.NETLIFY_DEV && !fs.existsSync(bgPath)) {
+      throw new Error(`Background image not found at: ${bgPath}`);
     }
 
     const bg = await loadImage(bgPath);
@@ -67,12 +68,16 @@ exports.handler = async (event) => {
   } catch (error) {
     return { 
       statusCode: 500, 
-      body: error.message 
+      body: JSON.stringify({
+        error: error.message,
+        attemptedPath: bgPath,
+        directoryContents: process.env.NETLIFY_DEV ? fs.readdirSync(path.dirname(bgPath)) : 'Not available in production'
+      }) 
     };
   }
 };
 
-// Helper functions remain the same as previous version
+// Helper: Circular profile photo
 function roundedImage(ctx, img, x, y, w, h, r) {
   ctx.save();
   ctx.beginPath();
@@ -83,6 +88,7 @@ function roundedImage(ctx, img, x, y, w, h, r) {
   ctx.restore();
 }
 
+// Helper: Text wrapping
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   const words = text.split(' ');
   let line = '';
@@ -102,6 +108,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
   ctx.fillText(line.trim(), x, y);
 }
 
+// Helper: Validate URLs
 function isValidUrl(url) {
   try {
     new URL(url);

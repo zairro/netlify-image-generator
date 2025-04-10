@@ -1,10 +1,12 @@
 [build]
-  functions = "netlify/functions"
   command = "echo 'No build needed'"
+  functions = "netlify/functions"
+  publish = "assets"  # This ensures assets are included
+
+[[plugins]]
+  package = "@netlify/plugin-functions-core"
+  [plugins.inputs]
+    include = ["assets/*"]  # Explicitly include assets
 
 [functions]
   node_bundler = "esbuild"
-
-[build.environment]
-  NODE_VERSION = "16"
-  AWS_LAMBDA_JS_RUNTIME = "nodejs16.x"

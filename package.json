@@ -2,10 +2,10 @@
     "name": "netlify-image-generator",
     "version": "1.0.0",
     "dependencies": {
-        "@napi-rs/canvas": "^0.1.35",
-        "@netlify/functions": "^1.4.0"
+      "@napi-rs/canvas": "^0.1.35",
+      "@netlify/functions": "^1.4.0"
     },
     "engines": {
-        "node": "16.x"
+      "node": ">=16"
     }
-}
+  }
