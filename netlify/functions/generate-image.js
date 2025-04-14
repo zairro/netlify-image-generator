@@ -3,7 +3,7 @@ const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const fs = require('fs');
 
 exports.handler = async (event) => {
-  // ===== 1. BULLETPROOF PATH RESOLUTION =====
+  // ===== 1. PATH RESOLUTION =====
   const isLocal = Boolean(process.env.NETLIFY_DEV);
   const projectRoot = isLocal ? process.cwd() : '/var/task';
   const bgPath = path.join(projectRoot, 'assets/award.png');
